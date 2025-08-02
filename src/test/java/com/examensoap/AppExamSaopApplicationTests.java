@@ -1,4 +1,4 @@
-package com.examensaop;
+package com.examensoap;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

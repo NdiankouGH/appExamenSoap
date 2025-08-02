@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Ce fichier XSD (XML Schema Definition) définit la structure de nos messages SOAP.
+     C'est comme créer un contrat : il spécifie exactement quels types de données
+     peuvent être échangés et dans quel format. -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:tns="http://examensoap.com/Classes"
+           xmlns:sec="http://examensoap.com/Sectors"
+           targetNamespace="http://examensoap.com/Classes"
+
+           elementFormDefault="qualified">
+<!--    <xs:import namespace="http://examensoap.com/Sectors" schemaLocation="Sectors.xsd"/>-->
+
+
+    <!-- Définition de l'élément racine -->
+    <!-- Type complexe pour représenter une classe -->
+    <xs:complexType name="Classes">
+        <xs:sequence>
+            <!-- xs:sequence signifie que les éléments doivent apparaître dans cet ordre -->
+            <xs:element name="id" type="xs:long"/>
+            <xs:element name="className" type="xs:string"/>
+            <xs:element name="description" type="xs:string"/>
+            <!-- Référence à la filiere -->
+            <xs:element name="sectors" type="xs:long"/>
+
+        </xs:sequence>
+    </xs:complexType>
+
+    <!-- MESSAGE : Obtenir un étudiant par son ID -->
+    <xs:element name="getClassesRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="id" type="xs:long"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <!-- Ceci représente la "réponse" que le serveur renvoie au client -->
+    <xs:element name="getClassesResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <!-- Ici, on utilise le type complexe défini plus haut -->
+                <xs:element name="classes" type="tns:Classes"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <!-- MESSAGE : Obtenir toutes les classes -->
+    <xs:element name="getAllClassesRequest">
+        <xs:complexType>
+            <xs:sequence>
+
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="getAllClassesResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <!-- maxOccurs="unbounded" permet d'avoir une liste des classes -->
+                <xs:element name="classLitst" type="tns:Classes" minOccurs="0" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+
+    <!-- MESSAGE : Créer une nouvelle classe -->
+    <xs:element name="createClassesRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="className" type="xs:string"/>
+                <xs:element name="description" type="xs:string"/>
+                <!-- Référence à la filiere -->
+                <xs:element name="sectors" type="xs:long"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="createClassesResponse">
+        <xs:complexType>
+            <xs:sequence>
+                    <xs:element name="classes" type="tns:Classes"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+
+    <!-- MESSAGE : Supprimer un étudiant -->
+    <xs:element name="deleteClassesRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="id" type="xs:long"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="deleteClassesResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <!-- On peut renvoyer un message de succès ou d'erreur -->
+                <xs:element name="message" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

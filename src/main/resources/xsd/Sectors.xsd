@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Ce fichier XSD (XML Schema Definition) définit la structure de nos messages SOAP.
+     C'est comme créer un contrat : il spécifie exactement quels types de données
+     peuvent être échangés et dans quel format. -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:tns="http://examensoap.com/Sectors"
+           targetNamespace="http://examensoap.com/Sectors"
+           elementFormDefault="qualified">
+    <!-- Définition de l'élément racine -->
+    <!-- Type complexe pour représenter une filiere -->
+    <xs:complexType name="Sectors">
+        <xs:sequence>
+            <!-- xs:sequence signifie que les éléments doivent apparaître dans cet ordre -->
+            <xs:element name="id" type="xs:long"/>
+            <xs:element name="name" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <!-- MESSAGE : Obtenir une filiere par son ID -->
+    <xs:element name="getSectorsRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="id" type="xs:long"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="getSectorsResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <!-- Ici, on utilise le type complexe défini plus haut -->
+                <xs:element name="sectors" type="tns:Sectors"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <!-- MESSAGE : Obtenir toutes les filieres -->
+    <xs:element name="getAllSectorsRequest">
+        <xs:complexType>
+            <xs:sequence>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="getAllSectorsResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <!-- maxOccurs="unbounded" permet d'avoir une liste des filieres -->
+                <xs:element name="sectorsList" type="tns:Sectors" minOccurs="0" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <!-- MESSAGE : Ajouter une filiere -->
+    <xs:element name="addSectorsRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <!-- Ici, on utilise le type complexe défini plus haut -->
+                <xs:element name="sectors" type="tns:Sectors"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="addSectorsResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <!-- On renvoie la filiere ajoutée -->
+                <xs:element name="sectors" type="tns:Sectors"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <!-- MESSAGE : Mettre à jour une filiere -->
+    <xs:element name="updateSectorsRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="id" type="xs:long"/>
+                <xs:element name="name" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="updateSectorsResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <!-- On renvoie la filiere mise à jour -->
+                <xs:element name="sectors" type="tns:Sectors"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+
+    <!-- MESSAGE : Supprimer une filiere -->
+    <xs:element name="deleteSectorsRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="id" type="xs:long"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="deleteSectorsResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <!-- On renvoie l'ID de la filiere supprimée -->
+                <xs:element name="id" type="xs:long"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+</xs:schema>

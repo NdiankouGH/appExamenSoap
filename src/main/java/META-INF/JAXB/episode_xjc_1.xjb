@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<bindings version="3.0" xmlns="https://jakarta.ee/xml/ns/jaxb">
+    <!--
+
+  Ce fichier a été généré par Eclipse Implementation of JAXB, v3.0.0
+  Voir https://eclipse-ee4j.github.io/jaxb-ri
+  Toute modification apportée à ce fichier sera perdue lors de la recompilation du schéma source.
+  Généré le : 2025.07.30 à 03:19:41 PM GMT
+
+    -->
+    <bindings xmlns:tns="http://examensoap.com/Sectors" scd="x-schema::tns">
+        <schemaBindings map="false">
+            <package name="com.examensoap.model"/>
+        </schemaBindings>
+        <bindings scd="tns:getSectorsRequest">
+            <class ref="com.examensoap.model.GetSectorsRequest"/>
+        </bindings>
+        <bindings scd="tns:getSectorsResponse">
+            <class ref="com.examensoap.model.GetSectorsResponse"/>
+        </bindings>
+        <bindings scd="~tns:Sectors">
+            <class ref="com.examensoap.model.Sectors"/>
+        </bindings>
+        <bindings scd="tns:getAllSectorsRequest">
+            <class ref="com.examensoap.model.GetAllSectorsRequest"/>
+        </bindings>
+        <bindings scd="tns:getAllSectorsResponse">
+            <class ref="com.examensoap.model.GetAllSectorsResponse"/>
+        </bindings>
+        <bindings scd="tns:addSectorsRequest">
+            <class ref="com.examensoap.model.AddSectorsRequest"/>
+        </bindings>
+        <bindings scd="tns:addSectorsResponse">
+            <class ref="com.examensoap.model.AddSectorsResponse"/>
+        </bindings>
+        <bindings scd="tns:updateSectorsRequest">
+            <class ref="com.examensoap.model.UpdateSectorsRequest"/>
+        </bindings>
+        <bindings scd="tns:updateSectorsResponse">
+            <class ref="com.examensoap.model.UpdateSectorsResponse"/>
+        </bindings>
+        <bindings scd="tns:deleteSectorsRequest">
+            <class ref="com.examensoap.model.DeleteSectorsRequest"/>
+        </bindings>
+        <bindings scd="tns:deleteSectorsResponse">
+            <class ref="com.examensoap.model.DeleteSectorsResponse"/>
+        </bindings>
+    </bindings>
+    <bindings xmlns:tns="http://examensoap.com/classes" scd="x-schema::tns">
+        <schemaBindings map="false">
+            <package name="com.examensoap.model"/>
+        </schemaBindings>
+        <bindings scd="tns:getClassesRequest">
+            <class ref="com.examensoap.model.GetClassesRequest"/>
+        </bindings>
+        <bindings scd="tns:getClassesResponse">
+            <class ref="com.examensoap.model.GetClassesResponse"/>
+        </bindings>
+        <bindings scd="~tns:Classes">
+            <class ref="com.examensoap.model.Classes"/>
+        </bindings>
+        <bindings scd="tns:getAllClassesRequest">
+            <class ref="com.examensoap.model.GetAllClassesRequest"/>
+        </bindings>
+        <bindings scd="tns:getAllClassesResponse">
+            <class ref="com.examensoap.model.GetAllClassesResponse"/>
+        </bindings>
+        <bindings scd="tns:createClassesRequest">
+            <class ref="com.examensoap.model.CreateClassesRequest"/>
+        </bindings>
+        <bindings scd="tns:createClassesResponse">
+            <class ref="com.examensoap.model.CreateClassesResponse"/>
+        </bindings>
+        <bindings scd="tns:deleteClassesRequest">
+            <class ref="com.examensoap.model.DeleteClassesRequest"/>
+        </bindings>
+        <bindings scd="tns:deleteClassesResponse">
+            <class ref="com.examensoap.model.DeleteClassesResponse"/>
+        </bindings>
+    </bindings>
+</bindings>
+

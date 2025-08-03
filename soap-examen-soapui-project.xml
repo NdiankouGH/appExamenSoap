@@ -1,0 +1,661 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:soapui-project xmlns:con="http://eviware.com/soapui/config" id="f31bb5b1-2d3d-4f67-892d-403c8d5fb387" activeEnvironment="Default"
+                    name="soap_examen" resourceRoot="" soapui-version="5.9.0">
+    <con:settings/>
+    <con:interface xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="con:WsdlInterface" id="4681e51b-bf9b-46c3-bc18-e50e95d787da"
+                   wsaVersion="NONE" name="SectorsPortSoap11" type="wsdl"
+                   bindingName="{http://examensoap.com/Sectors}SectorsPortSoap11" soapVersion="1_1" anonymous="optional"
+                   definition="http://localhost:9080/ws/sectorsWsdl.wsdl">
+        <con:settings/>
+        <con:definitionCache type="TEXT" rootPart="http://localhost:9080/ws/sectorsWsdl.wsdl">
+            <con:part>
+                <con:url>http://localhost:9080/ws/sectorsWsdl.wsdl</con:url>
+                <con:content><![CDATA[<wsdl:definitions targetNamespace="http://examensoap.com/Sectors" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:sch="http://examensoap.com/Sectors" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://examensoap.com/Sectors">
+  <wsdl:types>
+    <xs:schema elementFormDefault="qualified" targetNamespace="http://examensoap.com/Sectors" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <!--Définition de l'élément racine-->
+      <!--Type complexe pour représenter une filiere-->
+      <xs:complexType name="Sectors">
+        <xs:sequence>
+          <!--xs:sequence signifie que les éléments doivent apparaître dans cet ordre-->
+          <xs:element name="id" type="xs:long"/>
+          <xs:element name="name" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <!--MESSAGE : Obtenir une filiere par son ID-->
+      <xs:element name="getSectorsRequest">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="id" type="xs:long"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="getSectorsResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <!--Ici, on utilise le type complexe défini plus haut-->
+            <xs:element name="sectors" type="tns:Sectors"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <!--MESSAGE : Obtenir toutes les filieres-->
+      <xs:element name="getAllSectorsRequest">
+        <xs:complexType>
+          <xs:sequence></xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="getAllSectorsResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <!--maxOccurs="unbounded" permet d'avoir une liste des filieres-->
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="sectorsList" type="tns:Sectors"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <!--MESSAGE : Ajouter une filiere-->
+      <xs:element name="addSectorsRequest">
+        <xs:complexType>
+          <xs:sequence>
+            <!--Ici, on utilise le type complexe défini plus haut-->
+            <xs:element name="sectors" type="tns:Sectors"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="addSectorsResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <!--On renvoie la filiere ajoutée-->
+            <xs:element name="sectors" type="tns:Sectors"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <!--MESSAGE : Mettre à jour une filiere-->
+      <xs:element name="updateSectorsRequest">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="id" type="xs:long"/>
+            <xs:element name="name" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="updateSectorsResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <!--On renvoie la filiere mise à jour-->
+            <xs:element name="sectors" type="tns:Sectors"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <!--MESSAGE : Supprimer une filiere-->
+      <xs:element name="deleteSectorsRequest">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="id" type="xs:long"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="deleteSectorsResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <!--On renvoie l'ID de la filiere supprimée-->
+            <xs:element name="id" type="xs:long"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:schema>
+  </wsdl:types>
+  <wsdl:message name="addSectorsRequest">
+    <wsdl:part element="tns:addSectorsRequest" name="addSectorsRequest"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="updateSectorsRequest">
+    <wsdl:part element="tns:updateSectorsRequest" name="updateSectorsRequest"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="addSectorsResponse">
+    <wsdl:part element="tns:addSectorsResponse" name="addSectorsResponse"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="deleteSectorsRequest">
+    <wsdl:part element="tns:deleteSectorsRequest" name="deleteSectorsRequest"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="deleteSectorsResponse">
+    <wsdl:part element="tns:deleteSectorsResponse" name="deleteSectorsResponse"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="updateSectorsResponse">
+    <wsdl:part element="tns:updateSectorsResponse" name="updateSectorsResponse"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getSectorsResponse">
+    <wsdl:part element="tns:getSectorsResponse" name="getSectorsResponse"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getAllSectorsResponse">
+    <wsdl:part element="tns:getAllSectorsResponse" name="getAllSectorsResponse"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getSectorsRequest">
+    <wsdl:part element="tns:getSectorsRequest" name="getSectorsRequest"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getAllSectorsRequest">
+    <wsdl:part element="tns:getAllSectorsRequest" name="getAllSectorsRequest"></wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="SectorsPort">
+    <wsdl:operation name="addSectors">
+      <wsdl:input message="tns:addSectorsRequest" name="addSectorsRequest"></wsdl:input>
+      <wsdl:output message="tns:addSectorsResponse" name="addSectorsResponse"></wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="updateSectors">
+      <wsdl:input message="tns:updateSectorsRequest" name="updateSectorsRequest"></wsdl:input>
+      <wsdl:output message="tns:updateSectorsResponse" name="updateSectorsResponse"></wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="deleteSectors">
+      <wsdl:input message="tns:deleteSectorsRequest" name="deleteSectorsRequest"></wsdl:input>
+      <wsdl:output message="tns:deleteSectorsResponse" name="deleteSectorsResponse"></wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getSectors">
+      <wsdl:input message="tns:getSectorsRequest" name="getSectorsRequest"></wsdl:input>
+      <wsdl:output message="tns:getSectorsResponse" name="getSectorsResponse"></wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getAllSectors">
+      <wsdl:input message="tns:getAllSectorsRequest" name="getAllSectorsRequest"></wsdl:input>
+      <wsdl:output message="tns:getAllSectorsResponse" name="getAllSectorsResponse"></wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="SectorsPortSoap11" type="tns:SectorsPort">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="addSectors">
+      <soap:operation soapAction=""/>
+      <wsdl:input name="addSectorsRequest">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="addSectorsResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="updateSectors">
+      <soap:operation soapAction=""/>
+      <wsdl:input name="updateSectorsRequest">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="updateSectorsResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="deleteSectors">
+      <soap:operation soapAction=""/>
+      <wsdl:input name="deleteSectorsRequest">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="deleteSectorsResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getSectors">
+      <soap:operation soapAction=""/>
+      <wsdl:input name="getSectorsRequest">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getSectorsResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getAllSectors">
+      <soap:operation soapAction=""/>
+      <wsdl:input name="getAllSectorsRequest">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getAllSectorsResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="SectorsPortService">
+    <wsdl:port binding="tns:SectorsPortSoap11" name="SectorsPortSoap11">
+      <soap:address location="http://localhost:9080/ws/"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>]]></con:content>
+                <con:type>http://schemas.xmlsoap.org/wsdl/</con:type>
+            </con:part>
+        </con:definitionCache>
+        <con:endpoints>
+            <con:endpoint>http://localhost:9080/ws/</con:endpoint>
+        </con:endpoints>
+        <con:operation id="f2bf6944-7b32-4756-addd-64a667764b83" isOneWay="false" action="" name="addSectors"
+                       bindingOperationName="addSectors" type="Request-Response" outputName="addSectorsResponse"
+                       inputName="addSectorsRequest" receivesAttachments="false" sendsAttachments="false"
+                       anonymous="optional">
+            <con:settings/>
+            <con:call id="2278c453-f758-45c1-b203-261c2d9745f3" name="Request 1">
+                <con:settings>
+                    <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/>
+                    </con:setting>
+                </con:settings>
+                <con:encoding>UTF-8</con:encoding>
+                <con:endpoint>http://localhost:9080/ws/</con:endpoint>
+                <con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:sec="http://examensoap.com/Sectors">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <sec:addSectorsRequest>\r
+         <sec:sectors>\r
+            <sec:id>3</sec:id>\r
+            <sec:name>Physique</sec:name>\r
+         </sec:sectors>\r
+      </sec:addSectorsRequest>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request>
+                <con:credentials>
+                    <con:authType>No Authorization</con:authType>
+                </con:credentials>
+                <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+                <con:jmsPropertyConfig/>
+                <con:wsaConfig mustUnderstand="NONE" version="200508"
+                               action="http://examensoap.com/Sectors/SectorsPort/addSectorsRequest"/>
+                <con:wsrmConfig version="1.2"/>
+            </con:call>
+        </con:operation>
+        <con:operation id="a18c8d3b-6332-456b-a624-1f88bcc05745" isOneWay="false" action="" name="deleteSectors"
+                       bindingOperationName="deleteSectors" type="Request-Response" outputName="deleteSectorsResponse"
+                       inputName="deleteSectorsRequest" receivesAttachments="false" sendsAttachments="false"
+                       anonymous="optional">
+            <con:settings/>
+            <con:call id="4dc5bfab-23ca-4b5d-964f-4e8437670ce6" name="Request 1">
+                <con:settings/>
+                <con:encoding>UTF-8</con:encoding>
+                <con:endpoint>http://localhost:9080/ws/</con:endpoint>
+                <con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:sec="http://examensoap.com/Sectors">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <sec:deleteSectorsRequest>\r
+         <sec:id>?</sec:id>\r
+      </sec:deleteSectorsRequest>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request>
+                <con:wsaConfig mustUnderstand="NONE" version="200508"
+                               action="http://examensoap.com/Sectors/SectorsPort/deleteSectorsRequest"/>
+            </con:call>
+        </con:operation>
+        <con:operation id="7e707406-88c4-4a05-8a9c-75a74c1eff1a" isOneWay="false" action="" name="getAllSectors"
+                       bindingOperationName="getAllSectors" type="Request-Response" outputName="getAllSectorsResponse"
+                       inputName="getAllSectorsRequest" receivesAttachments="false" sendsAttachments="false"
+                       anonymous="optional">
+            <con:settings/>
+            <con:call id="caf6cc99-bc8f-4dbe-9d7f-8c301b14b926" name="Request 1">
+                <con:settings>
+                    <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/>
+                    </con:setting>
+                </con:settings>
+                <con:encoding>UTF-8</con:encoding>
+                <con:endpoint>http://localhost:9080/ws/</con:endpoint>
+                <con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:sec="http://examensoap.com/Sectors">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <sec:getAllSectorsRequest/>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request>
+                <con:credentials>
+                    <con:authType>No Authorization</con:authType>
+                </con:credentials>
+                <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+                <con:jmsPropertyConfig/>
+                <con:wsaConfig mustUnderstand="NONE" version="200508"
+                               action="http://examensoap.com/Sectors/SectorsPort/getAllSectorsRequest"/>
+                <con:wsrmConfig version="1.2"/>
+            </con:call>
+        </con:operation>
+        <con:operation id="80b9e469-78a2-430c-9917-b593a09f9aeb" isOneWay="false" action="" name="getSectors"
+                       bindingOperationName="getSectors" type="Request-Response" outputName="getSectorsResponse"
+                       inputName="getSectorsRequest" receivesAttachments="false" sendsAttachments="false"
+                       anonymous="optional">
+            <con:settings/>
+            <con:call id="8ea12b0f-a2bc-4e54-a0de-6f77e895300e" name="Request 1">
+                <con:settings>
+                    <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/>
+                    </con:setting>
+                </con:settings>
+                <con:encoding>UTF-8</con:encoding>
+                <con:endpoint>http://localhost:9080/ws/</con:endpoint>
+                <con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:sec="http://examensoap.com/Sectors">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <sec:getSectorsRequest>\r
+         <sec:id>3</sec:id>\r
+      </sec:getSectorsRequest>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request>
+                <con:credentials>
+                    <con:authType>No Authorization</con:authType>
+                </con:credentials>
+                <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+                <con:jmsPropertyConfig/>
+                <con:wsaConfig mustUnderstand="NONE" version="200508"
+                               action="http://examensoap.com/Sectors/SectorsPort/getSectorsRequest"/>
+                <con:wsrmConfig version="1.2"/>
+            </con:call>
+        </con:operation>
+        <con:operation id="5d50e75d-5d5c-46dd-9614-a8917c007f57" isOneWay="false" action="" name="updateSectors"
+                       bindingOperationName="updateSectors" type="Request-Response" outputName="updateSectorsResponse"
+                       inputName="updateSectorsRequest" receivesAttachments="false" sendsAttachments="false"
+                       anonymous="optional">
+            <con:settings/>
+            <con:call id="8557ffbe-9e40-4487-a19c-cb304d7bedf3" name="Request 1">
+                <con:settings/>
+                <con:encoding>UTF-8</con:encoding>
+                <con:endpoint>http://localhost:9080/ws/</con:endpoint>
+                <con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:sec="http://examensoap.com/Sectors">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <sec:updateSectorsRequest>\r
+         <sec:id>?</sec:id>\r
+         <sec:name>?</sec:name>\r
+      </sec:updateSectorsRequest>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request>
+                <con:credentials>
+                    <con:authType>No Authorization</con:authType>
+                </con:credentials>
+                <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+                <con:jmsPropertyConfig/>
+                <con:wsaConfig mustUnderstand="NONE" version="200508"
+                               action="http://examensoap.com/Sectors/SectorsPort/updateSectorsRequest"/>
+                <con:wsrmConfig version="1.2"/>
+            </con:call>
+        </con:operation>
+    </con:interface>
+    <con:interface xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="con:WsdlInterface" id="8bae6c71-658d-4675-8cd6-f476852c6e06"
+                   wsaVersion="NONE" name="ClassesPortSoap11" type="wsdl"
+                   bindingName="{http://examensoap.com/Classes}ClassesPortSoap11" soapVersion="1_1" anonymous="optional"
+                   definition="http://localhost:9080/ws/classesWsdl.wsdl">
+        <con:settings/>
+        <con:definitionCache type="TEXT" rootPart="http://localhost:9080/ws/classesWsdl.wsdl">
+            <con:part>
+                <con:url>http://localhost:9080/ws/classesWsdl.wsdl</con:url>
+                <con:content><![CDATA[<wsdl:definitions targetNamespace="http://examensoap.com/Classes" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:sch="http://examensoap.com/Classes" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://examensoap.com/Classes">
+  <wsdl:types>
+    <xs:schema elementFormDefault="qualified" targetNamespace="http://examensoap.com/Classes" xmlns:sec="http://examensoap.com/Sectors" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <!--<xs:import namespace="http://examensoap.com/Sectors" schemaLocation="Sectors.xsd"/>-->
+      <!--Définition de l'élément racine-->
+      <!--Type complexe pour représenter une classe-->
+      <xs:complexType name="Classes">
+        <xs:sequence>
+          <!--xs:sequence signifie que les éléments doivent apparaître dans cet ordre-->
+          <xs:element name="id" type="xs:long"/>
+          <xs:element name="className" type="xs:string"/>
+          <xs:element name="description" type="xs:string"/>
+          <!--Référence à la filiere-->
+          <xs:element name="sectors" type="xs:long"/>
+        </xs:sequence>
+      </xs:complexType>
+      <!--MESSAGE : Obtenir un étudiant par son ID-->
+      <xs:element name="getClassesRequest">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="id" type="xs:long"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <!--Ceci représente la "réponse" que le serveur renvoie au client-->
+      <xs:element name="getClassesResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <!--Ici, on utilise le type complexe défini plus haut-->
+            <xs:element name="classes" type="tns:Classes"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <!--MESSAGE : Obtenir toutes les classes-->
+      <xs:element name="getAllClassesRequest">
+        <xs:complexType>
+          <xs:sequence></xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="getAllClassesResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <!--maxOccurs="unbounded" permet d'avoir une liste des classes-->
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="classLitst" type="tns:Classes"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <!--MESSAGE : Créer une nouvelle classe-->
+      <xs:element name="createClassesRequest">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="className" type="xs:string"/>
+            <xs:element name="description" type="xs:string"/>
+            <!--Référence à la filiere-->
+            <xs:element name="sectors" type="xs:long"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="createClassesResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="classes" type="tns:Classes"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <!--MESSAGE : Supprimer un étudiant-->
+      <xs:element name="deleteClassesRequest">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="id" type="xs:long"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="deleteClassesResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <!--On peut renvoyer un message de succès ou d'erreur-->
+            <xs:element name="message" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:schema>
+  </wsdl:types>
+  <wsdl:message name="deleteClassesResponse">
+    <wsdl:part element="tns:deleteClassesResponse" name="deleteClassesResponse"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="createClassesResponse">
+    <wsdl:part element="tns:createClassesResponse" name="createClassesResponse"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getClassesResponse">
+    <wsdl:part element="tns:getClassesResponse" name="getClassesResponse"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getClassesRequest">
+    <wsdl:part element="tns:getClassesRequest" name="getClassesRequest"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getAllClassesRequest">
+    <wsdl:part element="tns:getAllClassesRequest" name="getAllClassesRequest"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="createClassesRequest">
+    <wsdl:part element="tns:createClassesRequest" name="createClassesRequest"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getAllClassesResponse">
+    <wsdl:part element="tns:getAllClassesResponse" name="getAllClassesResponse"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="deleteClassesRequest">
+    <wsdl:part element="tns:deleteClassesRequest" name="deleteClassesRequest"></wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="ClassesPort">
+    <wsdl:operation name="deleteClasses">
+      <wsdl:input message="tns:deleteClassesRequest" name="deleteClassesRequest"></wsdl:input>
+      <wsdl:output message="tns:deleteClassesResponse" name="deleteClassesResponse"></wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="createClasses">
+      <wsdl:input message="tns:createClassesRequest" name="createClassesRequest"></wsdl:input>
+      <wsdl:output message="tns:createClassesResponse" name="createClassesResponse"></wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getClasses">
+      <wsdl:input message="tns:getClassesRequest" name="getClassesRequest"></wsdl:input>
+      <wsdl:output message="tns:getClassesResponse" name="getClassesResponse"></wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getAllClasses">
+      <wsdl:input message="tns:getAllClassesRequest" name="getAllClassesRequest"></wsdl:input>
+      <wsdl:output message="tns:getAllClassesResponse" name="getAllClassesResponse"></wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="ClassesPortSoap11" type="tns:ClassesPort">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="deleteClasses">
+      <soap:operation soapAction=""/>
+      <wsdl:input name="deleteClassesRequest">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="deleteClassesResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="createClasses">
+      <soap:operation soapAction=""/>
+      <wsdl:input name="createClassesRequest">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="createClassesResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getClasses">
+      <soap:operation soapAction=""/>
+      <wsdl:input name="getClassesRequest">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getClassesResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getAllClasses">
+      <soap:operation soapAction=""/>
+      <wsdl:input name="getAllClassesRequest">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getAllClassesResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="ClassesPortService">
+    <wsdl:port binding="tns:ClassesPortSoap11" name="ClassesPortSoap11">
+      <soap:address location="http://localhost:9080/ws/"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>]]></con:content>
+                <con:type>http://schemas.xmlsoap.org/wsdl/</con:type>
+            </con:part>
+        </con:definitionCache>
+        <con:endpoints>
+            <con:endpoint>http://localhost:9080/ws/</con:endpoint>
+        </con:endpoints>
+        <con:operation id="b0481742-2260-4daf-8740-f430785e12f4" isOneWay="false" action="" name="createClasses"
+                       bindingOperationName="createClasses" type="Request-Response" outputName="createClassesResponse"
+                       inputName="createClassesRequest" receivesAttachments="false" sendsAttachments="false"
+                       anonymous="optional">
+            <con:settings/>
+            <con:call id="cd76e0c8-da17-4a52-858c-a68ee094a44a" name="Request 1">
+                <con:settings>
+                    <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/>
+                    </con:setting>
+                </con:settings>
+                <con:encoding>UTF-8</con:encoding>
+                <con:endpoint>http://localhost:9080/ws/</con:endpoint>
+                <con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:clas="http://examensoap.com/Classes">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <clas:createClassesRequest>\r
+         <clas:className>Classe C</clas:className>\r
+         <clas:description>Description de la classe C</clas:description>\r
+         <clas:sectors>1</clas:sectors>\r
+      </clas:createClassesRequest>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request>
+                <con:credentials>
+                    <con:authType>No Authorization</con:authType>
+                </con:credentials>
+                <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+                <con:jmsPropertyConfig/>
+                <con:wsaConfig mustUnderstand="NONE" version="200508"
+                               action="http://examensoap.com/Classes/ClassesPort/createClassesRequest"/>
+                <con:wsrmConfig version="1.2"/>
+            </con:call>
+        </con:operation>
+        <con:operation id="a666b233-5860-4e07-93f8-634f022128c2" isOneWay="false" action="" name="deleteClasses"
+                       bindingOperationName="deleteClasses" type="Request-Response" outputName="deleteClassesResponse"
+                       inputName="deleteClassesRequest" receivesAttachments="false" sendsAttachments="false"
+                       anonymous="optional">
+            <con:settings/>
+            <con:call id="5e5564d5-ca04-4435-aa51-a43467a503cc" name="Request 1">
+                <con:settings/>
+                <con:encoding>UTF-8</con:encoding>
+                <con:endpoint>http://localhost:9080/ws/</con:endpoint>
+                <con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:clas="http://examensoap.com/Classes">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <clas:deleteClassesRequest>\r
+         <clas:id>?</clas:id>\r
+      </clas:deleteClassesRequest>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request>
+                <con:wsaConfig mustUnderstand="NONE" version="200508"
+                               action="http://examensoap.com/Classes/ClassesPort/deleteClassesRequest"/>
+            </con:call>
+        </con:operation>
+        <con:operation id="9fa6b6c9-699c-4b5c-9f0f-a46ae799e21d" isOneWay="false" action="" name="getAllClasses"
+                       bindingOperationName="getAllClasses" type="Request-Response" outputName="getAllClassesResponse"
+                       inputName="getAllClassesRequest" receivesAttachments="false" sendsAttachments="false"
+                       anonymous="optional">
+            <con:settings/>
+            <con:call id="675a29e4-b8ff-41d0-bb9c-022c6b9e942a" name="Request 1">
+                <con:settings>
+                    <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/>
+                    </con:setting>
+                </con:settings>
+                <con:encoding>UTF-8</con:encoding>
+                <con:endpoint>http://localhost:9080/ws/</con:endpoint>
+                <con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:clas="http://examensoap.com/Classes">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <clas:getAllClassesRequest/>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request>
+                <con:credentials>
+                    <con:authType>No Authorization</con:authType>
+                </con:credentials>
+                <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+                <con:jmsPropertyConfig/>
+                <con:wsaConfig mustUnderstand="NONE" version="200508"
+                               action="http://examensoap.com/Classes/ClassesPort/getAllClassesRequest"/>
+                <con:wsrmConfig version="1.2"/>
+            </con:call>
+        </con:operation>
+        <con:operation id="d86e01fc-737e-4e2d-8a14-82e0c6edab1f" isOneWay="false" action="" name="getClasses"
+                       bindingOperationName="getClasses" type="Request-Response" outputName="getClassesResponse"
+                       inputName="getClassesRequest" receivesAttachments="false" sendsAttachments="false"
+                       anonymous="optional">
+            <con:settings/>
+            <con:call id="98b5edb2-7d86-4634-9e89-59540cb0147d" name="Request 1">
+                <con:settings>
+                    <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/>
+                    </con:setting>
+                </con:settings>
+                <con:encoding>UTF-8</con:encoding>
+                <con:endpoint>http://localhost:9080/ws/</con:endpoint>
+                <con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:clas="http://examensoap.com/Classes">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <clas:getClassesRequest>\r
+         <clas:id>2</clas:id>\r
+      </clas:getClassesRequest>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request>
+                <con:credentials>
+                    <con:authType>No Authorization</con:authType>
+                </con:credentials>
+                <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+                <con:jmsPropertyConfig/>
+                <con:wsaConfig mustUnderstand="NONE" version="200508"
+                               action="http://examensoap.com/Classes/ClassesPort/getClassesRequest"/>
+                <con:wsrmConfig version="1.2"/>
+            </con:call>
+        </con:operation>
+    </con:interface>
+    <con:properties/>
+    <con:wssContainer/>
+    <con:oAuth2ProfileContainer/>
+    <con:oAuth1ProfileContainer/>
+    <con:sensitiveInformation/>
+</con:soapui-project>

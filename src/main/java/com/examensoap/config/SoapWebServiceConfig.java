@@ -59,7 +59,7 @@ public class SoapWebServiceConfig {
 
     @Bean(name = "sectorsSchema")
     public XsdSchema sectorsSchema() {
-        return new SimpleXsdSchema(new ClassPathResource("xsd/sectors.xsd"));
+        return new SimpleXsdSchema(new ClassPathResource("xsd/Sectors.xsd"));
     }
 
     /**
@@ -104,7 +104,7 @@ public class SoapWebServiceConfig {
      * @return une instance de DefaultWsdl11Definition configurée pour les classes
      */
     @Bean(name = "classesWsdl")
-    public DefaultWsdl11Definition classesWsdl11Definition( XsdSchema classesSchema) {
+    public DefaultWsdl11Definition classesWsdl11Definition(XsdSchema classesSchema) {
         DefaultWsdl11Definition wsdl11Definition = new DefaultWsdl11Definition();
         wsdl11Definition.setPortTypeName("ClassesPort");
         wsdl11Definition.setLocationUri("/ws/");

@@ -1,0 +1,60 @@
+version:  '3.8'
+
+services:
+  mysql:
+      image: mysql:latest
+      container_name: container_mysql_soap
+      environment:
+        MYSQL_DATABASE: soap-db
+        MYSQL_USER: ndoye
+        MYSQL_PASSWORD: password10
+        MYSQL_ROOT_PASSWORD: root
+      ports:
+        - "3307:3306"
+      volumes:
+        - mysql_data:/var/lib/mysql
+      healthcheck:
+          test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "ndoye", "-p${MYSQL_PASSWORD}"]
+          interval: 5s
+          timeout: 5s
+          retries: 10
+          start_period: 40s
+      networks:
+        - app-network
+  app_soap:
+        image: ndoye/app_soap
+        container_name: container_app_soap
+        environment:
+          SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/soap-db?createDatabaseIfNotExist=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
+          SPRING_DATASOURCE_USERNAME: ndoye
+          SPRING_DATASOURCE_PASSWORD: password10
+        ports:
+          - "9080:9080"
+        depends_on:
+          mysql:
+            condition: service_healthy
+        restart: on-failure:3
+        networks:
+          - app-network
+  phpmyadmin-admin-db:
+    image: phpmyadmin/phpmyadmin:latest
+    container_name: container_phpmyadmin-soapdb
+    ports:
+      - "8085:80"
+    environment:
+      PMA_HOST: mysql
+      PMA_USER: ndoye
+      PMA_PASSWORD: password10
+    depends_on:
+      mysql:
+        condition: service_healthy
+    networks:
+        - app-network
+    restart: unless-stopped
+networks:
+    app-network:
+      driver: bridge
+volumes:
+    mysql_data:
+        driver: local
+

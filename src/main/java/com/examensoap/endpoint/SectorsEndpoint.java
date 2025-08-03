@@ -1,17 +1,20 @@
 package com.examensoap.endpoint;
 
+import com.examensoap.dto.SectorsDto;
+import com.examensoap.exception.ServiceException;
 import com.examensoap.model.*;
-import com.examensoap.service.SectorsService;
+import com.examensoap.service.impl.SectorsService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.ws.server.endpoint.annotation.Endpoint;
 import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
 import org.springframework.ws.server.endpoint.annotation.RequestPayload;
 import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Endpoint SOAP  pour la gestion des secteurs
+ * Endpoint SOAP pour la gestion des secteurs
  * <p>
  * Cette version corrige plusieurs problèmes importants de ton code original :
  * 1. Ajout des annotations @RequestPayload et @ResponsePayload manquantes
@@ -27,8 +30,11 @@ public class SectorsEndpoint {
 
 
     private static final String NAMESPACE_URI = "http://examensoap.com/Sectors";
+    private static final Logger logger = LoggerFactory.getLogger(SectorsEndpoint.class);
+
 
     private final SectorsService sectorsService;
+
 
     /**
      * Constructeur avec injection de dépendance
@@ -55,17 +61,17 @@ public class SectorsEndpoint {
     public GetSectorsResponse getSectors(@RequestPayload GetSectorsRequest request) {
 
         Long sectorId = request.getId();
-        System.out.println("Recherche du secteur avec l'ID: " + sectorId);
+        logger.info("Recherche du secteur avec l'ID:{}", sectorId);
 
         GetSectorsResponse response = new GetSectorsResponse();
 
         try {
-            Sectors foundSector = sectorsService.getSectorById(sectorId);
+            Sectors foundSector = convertToSector(sectorsService.getSectorById(sectorId));
             response.setSectors(foundSector);
-            System.out.println("✅ Secteur trouvé: " + foundSector.getName());
+            logger.info("Secteur trouvé: {}", foundSector.getName());
         } catch (IllegalArgumentException e) {
 
-            System.out.println(e.getMessage());
+            logger.info("Erreur lors de la recherche de la filiere ID {}", e.getMessage());
         }
 
         return response;
@@ -84,22 +90,28 @@ public class SectorsEndpoint {
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "getAllSectorsRequest")
     @ResponsePayload
     public GetAllSectorsResponse getAllSectors(@RequestPayload GetAllSectorsRequest request) {
-
-        System.out.println("📋 Récupération de tous les secteurs");
+        logger.info("Récupération de tous les secteurs");
 
         GetAllSectorsResponse response = new GetAllSectorsResponse();
-        List<Sectors> sectorsList = new ArrayList<>(sectorsService.getAllSectors().values());
+        try {
 
-        for (Sectors sector : sectorsList) {
-            response.getSectorsList().add(sector);
+
+            List<SectorsDto> sectorsList = sectorsService.getAllSectors();
+            logger.info("{} secteurs trouvés", sectorsList.size());
+
+            for (SectorsDto sector : sectorsList) {
+                response.getSectorsList().add(convertToSector(sector));
+            }
+
+            logger.info("{} secteurs ajoutés à la réponse", response.getSectorsList().size());
+        } catch (Exception e) {
+            logger.error("Erreur lors de la récupération des secteurs: {}", e.getMessage());
         }
-
-        System.out.println(sectorsList.size() + " secteurs retournés");
         return response;
     }
 
     /**
-     * Ajout d'un nouveau secteur
+     * Ajout d'un nouveau secter
      * <p>
      * Cette méthode est appelée lorsque le serveur reçoit une requête de type AddSectorsRequest.
      * Elle est annotée avec @PayloadRoot pour indiquer qu'elle gère les messages
@@ -111,23 +123,25 @@ public class SectorsEndpoint {
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "addSectorsRequest")
     @ResponsePayload
     public AddSectorsResponse addSectors(@RequestPayload AddSectorsRequest request) {
-
+        logger.info("Ajout d'un nouveau secteur");
         Sectors inputSector = request.getSectors();
-        System.out.println("Ajout d'un nouveau secteur: " + inputSector.getName());
+        SectorsDto inputSectorDto = new SectorsDto();
+        inputSectorDto.setName(inputSector.getName());
+        logger.info("Ajout d'un nouveau secteur: {}", inputSector.getName());
 
         AddSectorsResponse response = new AddSectorsResponse();
 
         try {
-            Sectors createdSector = sectorsService.createSectors(inputSector);
+            Sectors createdSector = convertToSector(sectorsService.createSectors(inputSectorDto));
             response.setSectors(createdSector);
-            System.out.println("Secteur créé avec l'ID: " + createdSector.getId());
+            logger.info("Secteur créé avec l'ID: {}", createdSector.getId());
         } catch (Exception e) {
             // En cas d'erreur, nous retournons un secteur avec un ID négatif
             Sectors errorSector = new Sectors();
             errorSector.setId(-1L);
             errorSector.setName("Erreur lors de la création: " + e.getMessage());
             response.setSectors(errorSector);
-            System.out.println("Erreur lors de la création: " + e.getMessage());
+            logger.error("Erreur lors de la création: {}", e.getMessage());
         }
 
         return response;
@@ -150,30 +164,28 @@ public class SectorsEndpoint {
         Long sectorId = request.getId();
         String newName = request.getName();
 
-        System.out.println(" Mise à jour du secteur ID " + sectorId + " avec le nom: " + newName);
+        logger.info(" Mise à jour du secteur ID {} avec le nom: {}", sectorId, newName);
 
         UpdateSectorsResponse response = new UpdateSectorsResponse();
 
         try {
             // Récupération du secteur existant
-            Sectors existingSector = sectorsService.getSectorById(sectorId);
+            Sectors existingSector = convertToSector(sectorsService.getSectorById(sectorId));
 
             // Création d'un nouveau secteur avec les données mises à jour
             Sectors updatedSector = new Sectors();
             updatedSector.setId(existingSector.getId());
             updatedSector.setName(newName);
 
-            // Tu devras ajouter une méthode updateSector dans ton SectorsService
-            // Pour l'instant, nous simulons la mise à jour
             response.setSectors(updatedSector);
-            System.out.println("Secteur mis à jour avec succès");
+            logger.info("Secteur mis à jour avec succès");
 
-        } catch (IllegalArgumentException e) {
+        } catch (ServiceException e) {
             Sectors errorSector = new Sectors();
             errorSector.setId(-1L);
             errorSector.setName("Erreur: " + e.getMessage());
             response.setSectors(errorSector);
-            System.out.println(e.getMessage());
+            logger.info("Erreur lors de la mis a jour : {}", e.getMessage());
         }
 
         return response;
@@ -194,21 +206,27 @@ public class SectorsEndpoint {
     public DeleteSectorsResponse deleteSectors(@RequestPayload DeleteSectorsRequest request) {
 
         Long sectorId = request.getId();
-        System.out.println("🗑️ Tentative de suppression du secteur ID: " + sectorId);
+        logger.info("Tentative de suppression du secteur ID: {}", sectorId);
 
         DeleteSectorsResponse response = new DeleteSectorsResponse();
 
         try {
             sectorsService.deleteSectors(sectorId);
-            // Selon ton XSD, la réponse contient l'ID du secteur supprimé
             response.setId(sectorId);
-            System.out.println("Secteur supprimé avec succès");
-        } catch (IllegalArgumentException e) {
+            logger.info("Secteur supprimé avec succès");
+        } catch (ServiceException e) {
             // En cas d'erreur, nous retournons un ID négatif
             response.setId(-1L);
-            System.out.println(e.getMessage());
+            logger.info("Erreur lors de la suppression :{}", e.getMessage());
         }
 
         return response;
+    }
+
+    private Sectors convertToSector(SectorsDto dto) {
+        Sectors sector = new Sectors();
+        sector.setId(dto.getId());
+        sector.setName(dto.getName());
+        return sector;
     }
 }

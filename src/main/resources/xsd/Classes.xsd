@@ -4,11 +4,10 @@
      peuvent être échangés et dans quel format. -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
            xmlns:tns="http://examensoap.com/Classes"
-           xmlns:sec="http://examensoap.com/Sectors"
            targetNamespace="http://examensoap.com/Classes"
 
            elementFormDefault="qualified">
-<!--    <xs:import namespace="http://examensoap.com/Sectors" schemaLocation="Sectors.xsd"/>-->
+    <!--    <xs:import namespace="http://examensoap.com/Sectors" schemaLocation="Sectors.xsd"/>-->
 
 
     <!-- Définition de l'élément racine -->
@@ -67,10 +66,8 @@
     <xs:element name="createClassesRequest">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="className" type="xs:string"/>
-                <xs:element name="description" type="xs:string"/>
-                <!-- Référence à la filiere -->
-                <xs:element name="sectors" type="xs:long"/>
+                <xs:element name="className" type="tns:Classes"/>
+
             </xs:sequence>
         </xs:complexType>
     </xs:element>
@@ -78,7 +75,7 @@
     <xs:element name="createClassesResponse">
         <xs:complexType>
             <xs:sequence>
-                    <xs:element name="classes" type="tns:Classes"/>
+                <xs:element name="classes" type="tns:Classes"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
